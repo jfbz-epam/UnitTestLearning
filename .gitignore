@@ -2,3 +2,4 @@
 /coverage
 package-lock.json
 /.nyc_output
+/full-app-with-tests

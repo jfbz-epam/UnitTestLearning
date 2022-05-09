@@ -1,4 +1,8 @@
-const { expect } = require("chai")
+const chai = require("chai")
+const expect = require('chai').expect;
+const { add, addCallback, addPromise } = require('../demo');
+const chaiAsPromised = require ('chai-as-promised');
+chai.use(chaiAsPromised);
 
 
 describe('chai test', () => {
@@ -27,3 +31,49 @@ describe('chai test', () => {
     });
     
 });
+
+describe('demo', ()=>{
+    context('add two valid numbers', () => {
+        it(' add with 1 and 2', () => {
+            expect(add(2,1)).to.equal(3);
+        })
+
+    })
+    context('callback add', () => {
+        it('add 2 numbers with a timeout of 500 ms', (done) => {
+            addCallback(2,1, (err, result) => {
+                expect(err).to.not.exist;
+                expect(result).to.equal(3);
+                done();
+            })
+        })
+    })
+    context('promise add', () => {
+        it('add 2 numbers with a promise', (done) => {
+            addPromise(2, 1).then((result)=>{
+                expect(result).to.equal(3);
+                done();
+            }).catch((err)=>{
+                process.stdout.write('there was an error\n');
+                process.stdout.write(`${err}\n`);
+                done();
+            })
+        })
+        it('test a promise with a return', () => {
+            return addPromise(2, 1).then((result)=>{
+                expect(result).to.equal(3);
+            }).catch((err)=>{
+                process.stdout.write(`${err}\n`);
+                process.stdout.write('there was an error\n');
+            })
+        })
+        it('test a promise with async', async () => {
+            
+            let result = await addPromise(2, 1);
+            expect(result).to.equal(3);
+        })
+        it('test promise with chai-as-promised', async () => {
+            await expect(addPromise(2,1)).to.eventually.equal(3);
+        })
+    })
+})

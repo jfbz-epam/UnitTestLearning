@@ -23,6 +23,7 @@
   "homepage": "https://github.com/jfbz-epam/UnitTestLearning#readme",
   "devDependencies": {
     "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1",
     "cross-env": "^7.0.3",
     "mocha": "^9.2.2",
     "nyc": "^15.1.0"
