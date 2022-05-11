@@ -27,5 +27,8 @@
     "cross-env": "^7.0.3",
     "mocha": "^9.2.2",
     "nyc": "^15.1.0"
+  },
+  "dependencies": {
+    "rewire": "^6.0.0"
   }
 }

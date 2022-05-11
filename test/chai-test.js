@@ -76,4 +76,33 @@ describe('demo', ()=>{
             await expect(addPromise(2,1)).to.eventually.equal(3);
         })
     })
+    describe('rewire test', () => {
+        context('test with FS', () => {
+            it('test readfile', () => {
+                var rewire = require("rewire");
+                var myModule = rewire("../readfile");
+                var fsMock = {
+                    readFile: function (path, encoding, cb) {
+                        expect(path).to.equal("/somewhere/on/the/disk");
+                        cb(null, "Success!");
+                    }
+                };
+                var rsffs = (cb) =>{
+                    cb(null, "Success!");
+                    console.log("me perdi ...");
+                }
+                myModule.__set__({
+                    noIdea: rsffs,
+                    fs: fsMock,
+                    //path: "/dev/null"
+                    path: "/somewhere/on/the/disk"
+                });
+                
+                
+                myModule.readSomethingFromFileSystem(function (err, data) {
+                    console.log(data); // = Success!
+                });
+            })
+        })
+    });
 })
